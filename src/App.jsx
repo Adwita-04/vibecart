@@ -1,62 +1,69 @@
-import React, { useEffect, useState } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import Products from './pages/Product'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import Cart from './pages/Cart'
-import Navbar from './components/Navbar'
-import Footer from './components/Footer'
-import SingleProduct from './pages/SingleProduct'
-import CategoryProduct from './pages/CategoryProduct'
-import { useCart } from './context/CartContext'
-import ProtectedRoute from './components/ProtectedRoute'
-import axios from 'axios'
+import React, { useEffect, useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./pages/Home";
+import Products from "./pages/Product";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import Cart from "./pages/Cart";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
+import SingleProduct from "./pages/SingleProduct";
+import CategoryProduct from "./pages/CategoryProduct";
+import { useCart } from "./context/CartContext";
+import ProtectedRoute from "./components/ProtectedRoute";
+import axios from "axios";
 
 const App = () => {
-  const [location, setLocation] = useState(null)
-  const [openDropdown, setOpenDropdown] = useState(false)
-  const { cartItem, setCartItem } = useCart()
+  const [location, setLocation] = useState({
+    city: "",
+    region: "",
+    country: "",
+  });
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const { cartItem, setCartItem } = useCart();
 
-  // Frontend-safe IP-based location fetch (avoids CORS issues)
+  // CLEAN GETLOCATION FUNCTION
   const getLocation = async () => {
     try {
-      const res = await axios.get('https://ipapi.co/json/')
-      setLocation({
-        city: res.data.city,
-        region: res.data.region,
-        country: res.data.country_name,
-        postal: res.data.postal,
-      })
-      setOpenDropdown(false)
+      const res = await axios.get("https://ipwho.is/");
+
+      if (res.data && res.data.success) {
+        console.log("Location Success:", res.data.city);
+        setLocation({
+          city: res.data.city,
+          region: res.data.region,
+          country: res.data.country,
+        });
+      }
+      setOpenDropdown(false); 
     } catch (err) {
-      console.log('Location fetch error:', err)
+      console.error("Galti yahan hai:", err.message);
     }
-  }
+  };
 
+  // Run once on mount
   useEffect(() => {
-    getLocation()
-  }, [])
+    getLocation();
+  }, []);
 
-  // Load cart from local storage safely
+  // Load cart logic (Corrected)
   useEffect(() => {
-    const storedCart = localStorage.getItem('cartItem')
+    const storedCart = localStorage.getItem("cartItem");
     if (storedCart) {
       try {
-        const parsed = JSON.parse(storedCart)
-        if (Array.isArray(parsed)) setCartItem(parsed)
-        else setCartItem([])
+        const parsed = JSON.parse(storedCart);
+        if (Array.isArray(parsed)) setCartItem(parsed);
       } catch (err) {
-        console.log('Error parsing cart:', err)
-        setCartItem([])
+        console.log("Error parsing cart:", err);
+        setCartItem([]);
       }
     }
-  }, [])
+  }, [setCartItem]);
 
-  // Save cart to local storage whenever it changes
+  // Save cart logic
   useEffect(() => {
-    localStorage.setItem('cartItem', JSON.stringify(cartItem))
-  }, [cartItem])
+    localStorage.setItem("cartItem", JSON.stringify(cartItem));
+  }, [cartItem]);
 
   return (
     <BrowserRouter>
@@ -67,14 +74,14 @@ const App = () => {
         setOpenDropdown={setOpenDropdown}
       />
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/products' element={<Products />} />
-        <Route path='/products/:id' element={<SingleProduct />} />
-        <Route path='/category/:category' element={<CategoryProduct />} />
-        <Route path='/about' element={<About />} />
-        <Route path='/contact' element={<Contact />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/products/:id" element={<SingleProduct />} />
+        <Route path="/category/:category" element={<CategoryProduct />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route
-          path='/cart'
+          path="/cart"
           element={
             <ProtectedRoute>
               <Cart location={location} getLocation={getLocation} />
@@ -84,7 +91,7 @@ const App = () => {
       </Routes>
       <Footer />
     </BrowserRouter>
-  )
-}
+  );
+};
 
-export default App
+export default App;

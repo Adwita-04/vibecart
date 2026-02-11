@@ -10,7 +10,6 @@ const Footer = () => {
         {/*  info */}
         <div className='mb-6 md:mb-0'>
             <Link to='/'>
-              {/* <img src={Logo} alt="" className='w-32'/> */}
               <h1 className='text-red-500 text-2xl font-bold'>VibeCart</h1>
             </Link>
             <p className='mt-2 text-sm'>Powering Your World with the Best in Electronics.</p>
