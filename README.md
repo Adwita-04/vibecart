@@ -1,3 +1,22 @@
+# VibeCart 🛒
+A sleek, responsive E-commerce platform built with React and Tailwind CSS.
+
+## ✨ Features
+- **Dynamic Cart:** Add/Remove items with real-time price updates.
+- **Responsive Design:** Optimized for Mobile, Tablet, and Desktop using Tailwind.
+- **Product Filtering:** Easy navigation through various product categories.
+- **Fast Performance:** Built as a Single Page Application (SPA).
+
+## 🛠️ Tech Stack
+- **Frontend:** React.js
+- **Styling:** Tailwind CSS
+- **Icons:** Lucide-React / FontAwesome
+- **Deployment:** Netlify/Vercel
+
+## 🚀 Future Enhancements
+- Integration with FastAPI/Node.js backend.
+- User Authentication (Firebase/JWT).
+- Payment Gateway integration.
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
