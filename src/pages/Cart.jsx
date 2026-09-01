@@ -79,7 +79,8 @@ const Cart = ({ location, getLocation }) => {
                     type="text"
                     placeholder="Enter your name"
                     className="p-2 rounded-md bg-white"
-                    value={user?.fullName}
+                    value={user?.fullName ?? ""}
+                    readOnly
                   />
                 </div>
                 <div className="flex flex-col space-y-1">
@@ -88,7 +89,8 @@ const Cart = ({ location, getLocation }) => {
                     type="text"
                     placeholder="Enter your address"
                     className="p-2 rounded-md bg-white"
-                    value={location?.county}
+                    value={location?.county ?? ""}
+                    readOnly
                   />
                 </div>
                 <div className="flex w-full gap-5">
@@ -98,7 +100,8 @@ const Cart = ({ location, getLocation }) => {
                       type="text"
                       placeholder="Enter your state"
                       className="p-2 rounded-md w-full bg-white"
-                      value={location?.state}
+                      value={location?.state ?? ""}
+                      readOnly
                     />
                   </div>
                   <div className="flex flex-col space-y-1 w-full">
@@ -107,7 +110,8 @@ const Cart = ({ location, getLocation }) => {
                       type="text"
                       placeholder="Enter your postcode"
                       className="p-2 rounded-md w-full bg-white"
-                      value={location?.postcode}
+                      value={location?.postcode ?? ""}
+                      readOnly
                     />
                   </div>
                 </div>
@@ -118,7 +122,8 @@ const Cart = ({ location, getLocation }) => {
                       type="text"
                       placeholder="Enter your country"
                       className="p-2 rounded-md w-full bg-white"
-                      value={location?.country}
+                      value={location?.country ?? ""}
+                      readOnly
                     />
                   </div>
                   <div className="flex flex-col space-y-1 w-full">

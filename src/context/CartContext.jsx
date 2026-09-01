@@ -24,34 +24,30 @@ export const CartProvider = ({ children }) => {
     }
 
     const updateQuantity = (productId, action) => {
-  setCartItem(prev =>
-    prev
-      .map(item => {
-        if (item.id === productId) {
+        const item = cartItem.find((cartProduct) => cartProduct.id === productId);
 
-          // INCREASE
-          if (action === "increase") {
-            return { ...item, quantity: item.quantity + 1 };
-          }
+        if (!item) return;
 
-          // DECREASE
-          if (action === "decrease") {
+        setCartItem((previousCart) =>
+            previousCart
+                .map((cartProduct) => {
+                    if (cartProduct.id !== productId) return cartProduct;
 
-            // quantity already 1 → warn & remove
-            if (item.quantity === 1) {
-              toast.warning("Item removed from cart");
-              return null; // removes item
-            }
+                    if (action === "increase") {
+                        return { ...cartProduct, quantity: cartProduct.quantity + 1 };
+                    }
 
-            // quantity > 1 → safe decrease
-            return { ...item, quantity: item.quantity - 1 };
-          }
+                    return cartProduct.quantity === 1
+                        ? null
+                        : { ...cartProduct, quantity: cartProduct.quantity - 1 };
+                })
+                .filter(Boolean),
+        );
+
+        if (action === "decrease" && item.quantity === 1) {
+            toast.warning("Item removed from cart");
         }
-        return item;
-      })
-      .filter(Boolean) // removes null items
-  );
-};
+    };
 
 
     const deleteItem = (productId) => {

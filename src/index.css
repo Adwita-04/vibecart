@@ -18,3 +18,18 @@ body {
   overflow-x: hidden;
 }
 
+/* Keep desktop navigation visible until the mobile menu takes over. */
+.desktop-nav,
+.desktop-auth {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .desktop-nav {
+    display: flex;
+  }
+
+  .desktop-auth {
+    display: block;
+  }
+}
